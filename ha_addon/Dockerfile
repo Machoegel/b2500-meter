@@ -12,6 +12,8 @@ WORKDIR /app
 
 # Copy the source code from build context (current checkout state)
 COPY . ./
+COPY ../Pipfile ./Pipfile
+COPY ../Pipfile.lock ./Pipfile.lock
 # Save run.sh before removing ha_addon directory and remove ha_addon directory to avoid conflicts
 RUN mv run.sh /tmp/run.sh && rm -rf translations
 
