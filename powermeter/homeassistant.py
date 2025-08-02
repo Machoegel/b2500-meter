@@ -40,6 +40,7 @@ class HomeAssistant(Powermeter):
         )
         self.path_prefix = path_prefix
         self.session = requests.Session()
+        self.last_state = []
 
     def get_json(self, path):
         if self.path_prefix:
@@ -77,7 +78,11 @@ class HomeAssistant(Powermeter):
                 path = f"/api/states/{entity}"
                 response = self.get_json(path)
                 results.append(float(response["state"]))
-            return results
+            if results == self.last_state:
+                return {0, 0, 0}
+            else:
+                self.last_state = results
+                return results
         else:
             results = []
             for in_entity, out_entity in zip(
@@ -88,4 +93,8 @@ class HomeAssistant(Powermeter):
                 response = self.get_json(f"/api/states/{out_entity}")
                 power_out = float(response["state"])
                 results.append(power_in - power_out)
-            return results
+            if results == self.last_state:
+                return {0, 0, 0}
+            else:
+                self.last_state = results
+                return results
