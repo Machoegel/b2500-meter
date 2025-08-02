@@ -184,6 +184,8 @@ def main():
     setLogLevel(args.loglevel)
     logger.info("startet b2500-meter application")
 
+    logger.info("!!!!!!!!!!!!!!!!Aangepaste versie!!!!!!!!!!!!!!!!!")
+
     # Load general settings
     device_types = (
         args.device_types
